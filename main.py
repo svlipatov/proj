@@ -75,12 +75,12 @@ result = st.button('Распознать')
 if result:
     # Get predictions
     names = predict_images(images, landmark_model)
-    
     st.write(names)
+
     # Request descriptions and coordinates from Wikipedia.
     wiki_data = getWikipedia(names)
 
-    # Show summarized descriptions for each landmark.
+    # Summarize descriptions for each landmark.
     for landmark in wiki_data:
         description = landmark['summary']
         summarized = summarize(description, summarizer, tokenizer)
