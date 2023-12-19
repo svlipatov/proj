@@ -7,6 +7,7 @@ import io
 from model_execute import preprocess_images, output_to_names
 from summarization import init_model_and_tokenizer, summarize
 from wikipedia_api import getWikipedia
+from mapbox_map import plot_map
 
 @st.cache_resource
 def load_recognition_model():
@@ -70,22 +71,24 @@ st.title("Распознавание достопримечательносте�
 # Images input.
 images = load_images()
 
+summarize_checkbox = st.checkbox("Короткое описание")
 result = st.button('Распознать')
 
-if result:
+if images and result:
     # Get predictions
     names = predict_images(images, landmark_model)
     st.write(names)
 
     # Request descriptions and coordinates from Wikipedia.
     wiki_data = getWikipedia(names)
-
+    st.write("Загружены данные с википедии.")
     # Summarize descriptions for each landmark.
-    for landmark in wiki_data:
-        description = landmark['summary']
-        summarized = summarize(description, summarizer, tokenizer)
-        landmark['summarized'] = summarized
-
+    if summarize_checkbox:
+        for landmark in wiki_data:
+            description = landmark['summary']
+            summarized = summarize(description, summarizer, tokenizer)
+            landmark['summarized'] = summarized
     st.write(wiki_data)
 
     # Draw a map.
+    plot_map(wiki_data)

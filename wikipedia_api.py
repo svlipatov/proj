@@ -26,12 +26,16 @@ def getWikipedia(pList):
          longitude = find['data-lon']
     else:
       summary = 'Ничего не найдено'
-
+      
     res = {'find':i,
-             'summary':summary,
-             'latitude':latitude,
-             'longitude':longitude,
+             'summary': summary,
+             'latitude': latitude,
+             'longitude': longitude,
              }
     result.append(res)
 
   return result
+
+if __name__ == "__main__":
+
+  print(getWikipedia(["Новый Арбат"]))
