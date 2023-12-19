@@ -4,10 +4,9 @@ Pillow
 bs4
 lxml
 requests
-requests
 transformers
 streamlit
 wikipedia
 torch
 torchvision
-pyplot
+plotly
