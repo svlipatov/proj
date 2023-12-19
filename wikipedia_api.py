@@ -17,13 +17,10 @@ def getWikipedia(pList):
     if not get is None:
 
       summary = wikipedia.summary(get[0])
-
-      page  = wikipedia.page(get[0])
-      soup = bs(page.html(), 'html.parser')
-      find = soup.find("a", {"class": "mw-kartographer-maplink"})
-      if not find is None:
-         latitude =  find['data-lat']
-         longitude = find['data-lon']
+      try:
+        latitude =  wikipedia.page(get[0]).coordinates[0]
+        longitude = wikipedia.page(get[0]).coordinates[1]
+      except KeyError: 'coordinates'
     else:
       summary = 'Ничего не найдено'
       
