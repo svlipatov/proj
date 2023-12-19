@@ -52,16 +52,21 @@ def load_images():
         )
     if uploaded_files is not None:
         images = []
+        cols_list = []
         for file in uploaded_files:
             image_data = file.getvalue()
-            st.image(image_data)
             images.append(image_data)
+            container = st.container(border=True)
+            cols = container.columns([1, 3])
+            cols[0].image(image_data, width=300)
+            cols_list.append(cols[1])
         
-        return [Image.open(io.BytesIO(image_data)) for image_data in images]
+        return [Image.open(io.BytesIO(image_data)) for image_data in images], cols_list
     else:
         return None
 
 
+st.set_page_config(layout="wide")
 # Load models
 landmark_model = load_recognition_model()
 summarizer, tokenizer = load_summarizer()
@@ -69,7 +74,7 @@ summarizer, tokenizer = load_summarizer()
 st.title("Распознавание достопримечательностей")
 
 # Images input.
-images = load_images()
+images, cols_list = load_images()
 
 summarize_checkbox = st.checkbox("Короткое описание")
 result = st.button('Распознать')
@@ -77,7 +82,6 @@ result = st.button('Распознать')
 if images and result:
     # Get predictions
     names = predict_images(images, landmark_model)
-    st.write(names)
 
     # Request descriptions and coordinates from Wikipedia.
     wiki_data = getWikipedia(names)
@@ -88,7 +92,13 @@ if images and result:
             description = landmark['summary']
             summarized = summarize(description, summarizer, tokenizer)
             landmark['summarized'] = summarized
-    st.write(wiki_data)
+    for posts, cols in zip(wiki_data, cols_list):
+        cols.markdown('**' + posts['find'] + '**')
+        if summarize_checkbox:
+            cols.markdown(posts['summarized'])
+        else:
+            cols.markdown(posts['summary'])
 
     # Draw a map.
-    plot_map(wiki_data)
+    with st.container():
+        plot_map(wiki_data)
