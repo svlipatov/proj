@@ -2,7 +2,7 @@
 title: Landmark Recognition
 emoji: 🗺️
 colorFrom: purple
-colorTo: black
+colorTo: green
 sdk: streamlit
 sdk_version: 1.29.0
 app_file: main.py
