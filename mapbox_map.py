@@ -16,22 +16,25 @@ def plot_map(landmarks):
     # Загрузка данных
     data = pd.DataFrame(landmarks)
     data = preprocess_df(data)
-    st.write(data)
+
     # Создание маркеров
     marker_size = 12  # Размер маркера
 
     fig = go.Figure()
 
+    marker_colors = ['orange', 'purple', 'red', 'green']
+
     for i, row in data.iterrows():
         if type(row['latitude']) is not float:
             continue
         fig.add_trace(go.Scattermapbox(
+            name=row['find'],
             lat=[row['latitude']],
             lon=[row['longitude']],
             mode='markers',
             marker=dict(
                 size=marker_size,
-                color='red',
+                color=marker_colors[i % len(marker_colors)],
                 sizemode='diameter',  # Размер маркера в диаметрах
             ),
             text=row['find']
@@ -48,7 +51,7 @@ def plot_map(landmarks):
 
     # Настройка карты
     fig.update_layout(
-        mapbox_style="open-street-map",
+        mapbox_style="carto-darkmatter",
         mapbox=dict(
             center=dict(lat=center_lat, lon=center_lon),
             zoom=zoom_level,
@@ -56,4 +59,4 @@ def plot_map(landmarks):
     )
 
     # Отображение карты в Streamlit
-    st.plotly_chart(fig)
+    st.plotly_chart(fig, use_container_width=True)

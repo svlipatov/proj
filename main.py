@@ -85,7 +85,7 @@ if images and result:
 
     # Request descriptions and coordinates from Wikipedia.
     wiki_data = getWikipedia(names)
-    st.write("Загружены данные с википедии.")
+
     # Summarize descriptions for each landmark.
     if summarize_checkbox:
         for landmark in wiki_data:
