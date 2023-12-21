@@ -22,7 +22,7 @@ def output_to_names(output):
     """
     Converts model outputs to category names names.
     """
-    with open('cat.csv') as file:
+    with open('model/cat.csv') as file:
         reader = csv.reader(file)
         cat_list = list(reader)[0]
 
@@ -58,7 +58,7 @@ def check_photo(name, photo):
 
 
 if __name__ == "__main__":
-    pkl_filename = "pickle_model.pkl"
+    pkl_filename = "model/pickle_model.pkl"
     with open(pkl_filename, 'rb') as file:
         model = pickle.load(file)
 

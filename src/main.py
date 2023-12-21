@@ -14,7 +14,7 @@ def load_recognition_model():
     """
     Loads the translation model pipeline.
     """
-    filename = "pickle_model.pkl"
+    filename = "model/pickle_model.pkl"
     with open(filename, 'rb') as file:
         model = pickle.load(file)
     return model

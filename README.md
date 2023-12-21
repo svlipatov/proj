@@ -5,7 +5,7 @@ colorFrom: purple
 colorTo: green
 sdk: streamlit
 sdk_version: 1.29.0
-app_file: main.py
+app_file: src/main.py
 pinned: false
 ---
 

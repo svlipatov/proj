@@ -173,7 +173,7 @@ model, optimizer, train_loader, valid_loader, 30)
 print('acc_train:', acc_train, '\nacc_valid:', acc_valid)
 
 # Сохранение модели в текущую рабочую директорию
-pkl_filename = "pickle_model.pkl"
+pkl_filename = "model/pickle_model.pkl"
 with open(pkl_filename, 'wb') as file:
     pickle.dump(model, file)
 
