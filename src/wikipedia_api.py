@@ -1,5 +1,4 @@
 import wikipedia
-from bs4 import BeautifulSoup as bs
 
 wikipedia.set_lang("ru")
 
